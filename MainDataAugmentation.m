@@ -28,6 +28,7 @@ options = trainingOptions(metodoOptim,...
   
 % To build training set, let us suppose that the cell array TR stores the
 % training images
+%let us suppose that y stores the training labels
 clear trainingImages
 %we suggest to initialize trainingImages to reduce computation time
 for pattern=1:length(TR)
@@ -84,7 +85,7 @@ end
 trainingImages = augmentedImageDatastore(imageSize,trainingImages,categorical(y'),'DataAugmentation',imageAugmenter);
 lgraph = layerGraph(net);
 lgraph = removeLayers(lgraph, {'ClassificationLayer_fc1000','fc1000_softmax','fc1000'});
-numClasses = max(yy);
+numClasses = max(y);
 newLayers = [
     fullyConnectedLayer(numClasses,'Name','fc','WeightLearnRateFactor',20,'BiasLearnRateFactor', 20)
     softmaxLayer('Name','softmax')
